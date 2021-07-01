@@ -1,0 +1,58 @@
+﻿@page "/"
+
+<div class="main">
+    <ul class="pizza-cards">
+        @if (Specials != null)
+        {
+            foreach (var Special in Specials)
+            {
+                <li @onclick="() => ShowConfigurePizzaDialog(Special)"
+                    style="background-image:url('@Special.ImageUrl')">
+                    <div class="pizza-info">
+                        <span class="title">@Special.Name</span>
+                        @Special.Description
+                        <span class="price">
+                            @Special.GetFormattedBasePrice()
+                        </span>
+                    </div>
+                </li>
+            }
+        }
+    </ul>
+</div>
+
+<div class="sidebar">
+    @if (Order.Pizzas.Any())
+    {
+        <div class="order-contents">
+            <h2>Tu orden</h2>
+
+            @foreach (var ConfiguredPizza in Order.Pizzas)
+            {
+                <ConfiguredPizzaItem Pizza="ConfiguredPizza"
+                                     OnRemoved="@(() => RemoveConfiguredPizza(ConfiguredPizza))" />
+            }
+        </div>
+    }
+    else
+    {
+        <div class="empty-cart">Selecciona una pizza<br>para empezar</div>
+    }
+
+    <div class="order-total @(Order.Pizzas.Any() ? "" : "hidden")">
+        Total:
+        <span class="total-price">@Order.GetFormattedTotalPrice()</span>
+        <button class="btn btn-warning"
+                @onclick="@PlaceOrder">
+            Ordenar >
+        </button>
+    </div>
+</div>
+
+
+@if (ShowingConfigureDialog)
+{
+    <ConfigurePizzaDialog Pizza="ConfiguringPizza"
+                          OnCancel="CancelConfigurePizzaDialog"
+                          OnConfirm="ConfirmConfigurePizzaDialog" />
+}
