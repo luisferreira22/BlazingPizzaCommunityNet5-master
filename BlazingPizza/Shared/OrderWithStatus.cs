@@ -10,7 +10,7 @@ namespace BlazingPizza.Shared
     public class OrderWithStatus
     {
         public readonly static TimeSpan PreparationDuration =
-                              TimeSpan.FromSeconds(15);
+                              TimeSpan.FromSeconds(25);
         public readonly static TimeSpan DeliveryDuration =
                                TimeSpan.FromMinutes(1);
 

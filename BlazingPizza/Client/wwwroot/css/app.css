@@ -618,3 +618,8 @@ input[type=range] {
   display:flex;
 }
 
+.track-order-details {
+  overflow:auto;
+  padding: 1.5rem 3rem;
+  flex-grow: 1;
+}

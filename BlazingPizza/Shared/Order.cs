@@ -18,6 +18,9 @@ namespace BlazingPizza.Shared
             Pizzas.Sum(p => p.GetTotalPrice());
         public string GetFormattedTotalPrice() =>
             GetTotalPrice().ToString("0.00");
+        public string GetFormattedCreatedtime() => 
+            CreatedTime.ToString("D", new System.Globalization.CultureInfo("es"));
+
     }
 
 }

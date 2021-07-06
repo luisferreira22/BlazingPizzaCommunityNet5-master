@@ -1,4 +1,5 @@
-﻿using BlazingPizza.Shared;
+﻿using BlazingPizza.Client.Services;
+using BlazingPizza.Shared;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
@@ -15,13 +16,14 @@ namespace BlazingPizza.Client.Pages
         [Inject]
         HttpClient HttpClient { get; set; }
         #endregion
-
+        [Inject]
+        NavigationManager navigationManager { get; set; }
+        [Inject]
+        OrderState OrderState { get; set; }
         #region Variables
         List<PizzaSpecial> Specials;
 
-        Pizza ConfiguringPizza;
-        bool ShowingConfigureDialog;
-        Order Order = new();
+
         #endregion
 
         #region Overrides
@@ -31,44 +33,17 @@ namespace BlazingPizza.Client.Pages
         }
         #endregion
 
-        #region Method
-        void ShowConfigurePizzaDialog(PizzaSpecial special)
-        {
-            ConfiguringPizza = new()
-            {
-                Special = special,
-                SpecialId = special.Id,
-                Size = Pizza.DefaultSize,
-                Toppings = new()
-            };
-            ShowingConfigureDialog = true;
-        }
-        #endregion
+
 
         #region event handler
-        void CancelConfigurePizzaDialog()
-        {
-            ConfiguringPizza = null;
-            ShowingConfigureDialog = false;
-        }
 
-        void ConfirmConfigurePizzaDialog()
-        {
-            Order.Pizzas.Add(ConfiguringPizza);
-            ConfiguringPizza = null;
-            ShowingConfigureDialog = false;
-        }
-
-
-        void RemoveConfiguredPizza(Pizza pizza)
-        {
-            Order.Pizzas.Remove(pizza);
-        }
 
         async Task PlaceOrder()
         {
-            await HttpClient.PostAsJsonAsync("orders", Order);
-            Order = new Order();
+           var Response= await HttpClient.PostAsJsonAsync("orders", OrderState.Order);
+            var NewOrderId = await Response.Content.ReadFromJsonAsync<int>();
+            OrderState.ResetOrder();
+            navigationManager.NavigateTo($"myorders/{NewOrderId}");
         }
         #endregion
     }
