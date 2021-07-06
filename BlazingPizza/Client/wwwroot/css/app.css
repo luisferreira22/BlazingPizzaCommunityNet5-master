@@ -571,3 +571,50 @@ input[type=range] {
         border-radius: 20px;
         padding: 0.4rem 1.2rem;
     }
+
+.orders-list .list-group-item {
+ display:flex;
+}
+.orders-list .col {
+ margin:auto;
+}
+
+.orders-list h5 {
+  color: #c03930;
+  font-size: 1.3rem;
+  font-weight:300;
+  margin:0.2rem 0 0 0;
+  font-family: Bahnschrift, Arial , Arial, Helvetica, sans-serif, sans-serif;
+  text-transform: uppercase;
+}
+
+.track-order {
+ background-color:white;
+ box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+ height:100%;
+ display:flex;
+ flex-direction: column
+}
+    .track-order > div {
+      overflow-y:hidden;
+    }
+
+.track-order-title {
+ background-color:#eee;
+ display:flex;
+ align-items:center;
+ padding: 1rem 3rem;
+}
+
+    .track-order-title h2 {
+     color:#c03939;
+     font-size:1rem;
+    font-weight:300;
+    margin:0;
+    font-family:Bahnschrift, Arial , Arial, Helvetica, sans-serif, sans-serif;
+    }
+.track-order-body {
+  flex-grow: 1;
+  display:flex;
+}
+

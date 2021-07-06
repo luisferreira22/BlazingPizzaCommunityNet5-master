@@ -31,7 +31,7 @@ namespace BlazingPizza.Client.Pages
         }
         #endregion
 
-        #region Metodos
+        #region Method
         void ShowConfigurePizzaDialog(PizzaSpecial special)
         {
             ConfiguringPizza = new()
@@ -45,7 +45,7 @@ namespace BlazingPizza.Client.Pages
         }
         #endregion
 
-        #region manejadores de eventos
+        #region event handler
         void CancelConfigurePizzaDialog()
         {
             ConfiguringPizza = null;

@@ -2,6 +2,7 @@
 using BlazingPizza.Shared;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace BlazingPizza.Server.Controllers
             order.CreatedTime = DateTime.Now;
             // Establecer una ubicación de envío ficticia
             order.DeliveryLocation =
-                new LatLong(15.1992362, 120.5854669);
+                new LatLong(34.9018717, 54.9634342);
 
             // Establecer el valor de Pizza.SpecialId y Topping.ToppingId
             // para que no se creen nuevos registros Special y Topping.
@@ -43,6 +44,34 @@ namespace BlazingPizza.Server.Controllers
             await Context.SaveChangesAsync();
 
             return order.OrderId;
+        }
+        [HttpGet]
+        public async Task<ActionResult<List<OrderWithStatus>>> GetOrders() 
+        {
+            var Orders = await Context.Orders.Include(o => o.DeliveryLocation)
+                                             .Include(o => o.Pizzas).ThenInclude(p => p.Special)
+                                             .Include(o => o.Pizzas).ThenInclude(p => p.Toppings)
+                                             .ThenInclude(t => t.Topping)
+                                             .OrderByDescending(o => o.CreatedTime)
+                                             .ToListAsync();
+            return Orders.Select(o => OrderWithStatus.FromOrder(o)).ToList();
+        }
+
+        [HttpGet("{orderId}")]
+        public async Task<ActionResult<OrderWithStatus>> GetOrderWithStatus(int orderId) {
+            var order = await Context.Orders.Where(o => o.OrderId == orderId)
+                                           .Include(o => o.DeliveryLocation)
+                                           .Include(o => o.Pizzas).ThenInclude(p => p.Special)
+                                           .Include(o => o.Pizzas).ThenInclude(p => p.Toppings)
+                                           .ThenInclude(t => t.Topping)
+                                            .SingleOrDefaultAsync();
+            if (order == null)
+            {
+                return NotFound();
+            }
+            else {
+                return OrderWithStatus.FromOrder(order);
+            }
         }
     }
 }
