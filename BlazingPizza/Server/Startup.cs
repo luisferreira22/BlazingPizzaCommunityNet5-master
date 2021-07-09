@@ -31,7 +31,7 @@ namespace BlazingPizza.Server
             );
             services.AddControllersWithViews();
             services.AddRazorPages();
-            services.AddAuthentication(options=>
+          /*  services.AddAuthentication(options=>
             {
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             })
@@ -46,7 +46,7 @@ namespace BlazingPizza.Server
                          return context.Response.WriteAsync("<script>windows.close();</script>");
  
                      };
-                });
+                });*/
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,8 +69,8 @@ namespace BlazingPizza.Server
             app.UseStaticFiles();
 
             app.UseRouting();
-            app.UseAuthentication();
-            app.UseAuthorization();
+            //app.UseAuthentication();
+            //app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();

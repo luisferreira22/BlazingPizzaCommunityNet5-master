@@ -22,8 +22,8 @@ namespace BlazingPizza.Server.Controllers
                                                   : LoggedOutUser;
         }
 
-        [HttpGet("user/sigin")]
-        public async Task SingIn(string redirectUri) {
+        [HttpGet("user/signin")]
+        public async Task SignIn(string redirectUri) {
             if (string.IsNullOrEmpty(redirectUri) || !Url.IsLocalUrl(redirectUri)) {
                 redirectUri = "/";
             }

@@ -13,7 +13,7 @@ namespace BlazingPizza.Server.Controllers
 {
     [Route("orders")]
     [ApiController]
-    [Authorize]
+   // [Authorize]
     public class OrdersController : ControllerBase
     {
         private readonly PizzaStoreContext Context;
