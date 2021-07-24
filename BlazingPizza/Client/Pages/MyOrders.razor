@@ -1,5 +1,5 @@
 ﻿@page "/myorders"
-@inject HttpClient HttpClient
+
 <div class="main">
     @if (OrdersWithStatus == null)
     {
@@ -41,12 +41,3 @@
     }
 </div>
 
-@code {
-    List<OrderWithStatus> OrdersWithStatus;
-    protected override async Task OnParametersSetAsync()
-    {
-        OrdersWithStatus = await HttpClient.GetFromJsonAsync<List<OrderWithStatus>>("orders");
-    }
-
-
-}

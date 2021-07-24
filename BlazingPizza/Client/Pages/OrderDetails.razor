@@ -1,5 +1,4 @@
 ﻿@page "/myorders/{orderId:int}"
-@inject HttpClient HttpClient
 @using System.Threading
 @implements IDisposable
 
@@ -35,46 +34,6 @@
 </div>
 
 @code {
-    [Parameter]
-    public int OrderId { get; set; }
-    OrderWithStatus OrderWithStatus;
-    bool InvalidOrder;
 
-    CancellationTokenSource PollingCanlationToken;
-    private async void PollforUpdate() {
-        PollingCanlationToken = new CancellationTokenSource();
-        while (!PollingCanlationToken.IsCancellationRequested)
-        {
-            try
-            {
-                InvalidOrder = false;
-                OrderWithStatus = await HttpClient.GetFromJsonAsync<OrderWithStatus>($"orders/{OrderId}");
-                if (OrderWithStatus.StatusText=="Entregado")
-                {
-                    PollingCanlationToken.Cancel();
-                }
-            }
-            catch (Exception ex) {
-                InvalidOrder = true;
-                PollingCanlationToken.Cancel();
-                Console.Error.WriteLine(ex);
-            }
-            StateHasChanged();
-            await Task.Delay(400);
-        }
-
-    }
-    //componente del ciclo de vida de los parametros, este se ejecuta cada vez que un parametro cambie de valor
-    protected override void OnParametersSet()
-    {
-        PollingCanlationToken?.Cancel();
-        PollforUpdate();
-    }
-
-    //Se utiliza para liberar el continuo acceso al servidor
-    void IDisposable.Dispose()
-    {
-        PollingCanlationToken?.Cancel();
-    }
 
 }
