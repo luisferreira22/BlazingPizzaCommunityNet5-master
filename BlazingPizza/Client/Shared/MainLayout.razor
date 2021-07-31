@@ -6,17 +6,14 @@
     </a>
     <NavLink href="" class="nav-tab" Match="NavLinkMatch.All">
         <img src="images/pizza-slice.svg" />
-        <div>Seleccionar Pizza</div>
+        <div>Elegir Pizza</div>
     </NavLink>
-    <NavLink href="myorders" class="nav-tab">
-        <img src="images/bike.svg" />
-        <div>Mis Ordenes</div>
+    <NavLink href="myorders" class="nav-tab" Match="NavLinkMatch.Prefix">
+        <img src="/images/bike.svg" />
+        <div>Mis ordenes</div>
     </NavLink>
-    <LoginDisplay>
-
-    </LoginDisplay>
+    <LoginDisplay />
 </div>
-
 
 <div class="content">
     @Body

@@ -9,6 +9,10 @@ namespace BlazingPizza.Shared
 {
     public class OrderWithStatus
     {
+        const string Preparing = "Preparando";
+        const string OutForDelivery = "En camino";
+        const string Delivered = "Entregado";
+
         public readonly static TimeSpan PreparationDuration =
                               TimeSpan.FromSeconds(25);
         public readonly static TimeSpan DeliveryDuration =
@@ -16,6 +20,7 @@ namespace BlazingPizza.Shared
 
         public Order Order { get; set; }
         public string StatusText { get; set; }
+        public bool IsDelivered => StatusText == Delivered;
         public List<Marker> MapMarkers { get; set; }
 
         public static OrderWithStatus FromOrder(Order order)

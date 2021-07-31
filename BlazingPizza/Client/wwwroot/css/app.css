@@ -573,154 +573,171 @@ input[type=range] {
     }
 
 .orders-list .list-group-item {
- display:flex;
+    display: flex;
 }
+
 .orders-list .col {
- margin:auto;
+    margin: auto;
 }
 
 .orders-list h5 {
-  color: #c03930;
-  font-size: 1.3rem;
-  font-weight:300;
-  margin:0.2rem 0 0 0;
-  font-family: Bahnschrift, Arial , Arial, Helvetica, sans-serif, sans-serif;
-  text-transform: uppercase;
+    color: #c03939;
+    font-size: 1.3rem;
+    font-weight: 300;
+    margin: 0.2rem 0 0 0;
+    font-family: 'Bahnschrift', Arial, Helvetica, sans-serif;
+    text-transform: uppercase;
 }
 
 .track-order {
- background-color:white;
- box-shadow: 0 2px 4px rgba(0,0,0,0.4);
- height:100%;
- display:flex;
- flex-direction: column
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
+
     .track-order > div {
-      overflow-y:hidden;
+        overflow-y: hidden
     }
 
-.track-order-title {
- background-color:#eee;
- display:flex;
- align-items:center;
- padding: 1rem 3rem;
+.track-order-title{
+    background-color: #eee;
+    display: flex;
+    align-items: center;
+    padding: 1rem 3rem;
 }
 
     .track-order-title h2 {
-     color:#c03939;
-     font-size:1rem;
-    font-weight:300;
-    margin:0;
-    font-family:Bahnschrift, Arial , Arial, Helvetica, sans-serif, sans-serif;
+        color: #c03939;
+        font-size: 1.3rem;
+        font-weight: 300;
+        margin: 0;
+        font-family: 'Bahnschrift', Arial, Helvetica, sans-serif;
+        text-transform: uppercase;
     }
+
 .track-order-body {
-  flex-grow: 1;
-  display:flex;
+    display: flex;
+    flex-grow: 1;
 }
 
-.track-order-details {
-  overflow:auto;
-  padding: 1.5rem 3rem;
-  flex-grow: 1;
+.track-order-details{
+    overflow-y: auto;
+    padding: 1.5rem 3rem;
+    flex-grow: 1;
 }
 
 .checkout-cols {
-  display:flex;
+    display: flex;
 }
-    .checkout-cols h4 {
-     margin-bottom:1.5rem;
-    }
-    .checkout-cols > div {
-     flex:1rem;
-     margin: 1rem;
-     border: 1px solid #ddd;
-     background: rgba(255,255,255,0.3);
-     padding: 1.25rem 1rem;
-    }
-        .checkout-cols > div:first-child {
-        margin-left:0;
-        }
-        .checkout-cols > div:last-child {
-         margin-right:0;
-        }
-.checkout-button {
-  margin:auto;
-  display:flex;
-  font-weight: 700;
-  border-radius: 20px;
-  padding: 0.4rem 1.2rem;
 
+    .checkout-cols h4 {
+        margin-bottom: 1.5rem;
+    }
+
+    .checkout-cols > div {
+        flex: 1;
+        margin: 1rem;
+        border: 1px solid #ddd;
+        background: rgba(255,255,255,0.3);
+        padding: 1.25rem 1rem;
+    }
+
+        .checkout-cols > div:first-child {
+            margin-left: 0;
+        }
+
+        .checkout-cols > div:last-child {
+            margin-right: 0;
+        }
+
+.checkout-button {
+    margin: auto;
+    display: block;
+    font-weight: 700;
+    border-radius: 20px;
+    padding: 0.4rem 1.2rem;
 }
+
 .form-field {
     display: flex;
     margin: 0.5rem;
 }
+
     .form-field > label {
         width: 8rem;
     }
+
     .form-field > div {
         flex-grow: 1;
     }
+
     .form-field input {
         width: 100%;
     }
 
-.valid.modified:not([tyoe=checkbox]) {
-  outline: 1px solid #26b050;
+.valid.modified:not([type=checkbox]) {
+    outline: 1px solid #26b050;
 }
 
 .invalid {
- outline:1px solid red;
+    outline: 1px solid red;
 }
+
 .validation-message {
- color:red;
+    color: red;
 }
 
 .user-info {
- margin-left:auto;
- display:flex;
- flex-direction: row;
- align-items:center;
- justify-content:center;
+    margin-left: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }
+
     .user-info img {
         margin-right: 0.7rem;
         width: 2.6rem;
     }
+
     .user-info .username {
-     display:block;
-     font-weight:700;
-     line-height:0.7rem;
-     margin-top: 0.5rem;
+        display: block;
+        font-weight: 700;
+        line-height: 0.7rem;
+        margin-top: 0.5rem;
+        color: white;
+        font-size: 1rem;
     }
+
     .user-info a {
-     color:#fff2cc;
-     font-size:0.8rem;
+        color: #fff2cc;
+        font-size: 0.8rem;
     }
+
 a.sign-in {
     background: none;
     border: 1.5px solid white;
-    border-radius: 0.7rem;
+    border-radius: 0.7em;
     color: white;
     text-transform: uppercase;
     padding: 0.2rem 0.8rem 0.1rem 0.8rem;
-    font-family: ' Bahnschrift', Arial, Helvetica, sans-serif;
-    font-weight:100;
-    cursor:pointer;
+    font-family: 'Bahnschrift', Arial, Helvetica, sans-serif;
+    font-weight: 100;
+    cursor: pointer;
     transition: 0.2s ease-out;
+    margin-left: 3px;
 }
 
     a.sign-in:hover {
-     background-color:rgba(255,255,255,0.3);
-     color:#fff2cc;
-     border-color:#fff2cc;
+        background-color: rgba(255,255,255,0.3);
+        color: #fff2cc;
+        border-color: #fff2cc;
     }
-.user-info a.sign-out {
- color:#fff2cc;
- font-size:0.8rem;
- cursor:pointer;
 
+.user-info button.sign-out {
+    color: #fff2cc;
+    font-size: 0.8rem;
+    padding: 0;
 }
-    .user-info a.sign-out:hover {
-    text-decoration:underline;
-    }

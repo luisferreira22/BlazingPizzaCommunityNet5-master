@@ -10,54 +10,57 @@ using System.Threading.Tasks;
 
 namespace BlazingPizza.Client.Pages
 {
-    public partial class OrderDetails
+    public partial class OrderDetails : IDisposable
     {
+        [Inject]
+        public HttpClient HttpClient { get; set; }
+
         [Parameter]
         public int OrderId { get; set; }
-        [Inject]
-        HttpClient HttpClient { get; set; }
+
         OrderWithStatus OrderWithStatus;
         bool InvalidOrder;
 
-        CancellationTokenSource PollingCanlationToken;
-        private async void PollforUpdate()
+        CancellationTokenSource PollingCancellatioinToken;
+
+        private async void PoolForUpdates()
         {
-            PollingCanlationToken = new CancellationTokenSource();
-            while (!PollingCanlationToken.IsCancellationRequested)
+            PollingCancellatioinToken = new CancellationTokenSource();
+            while (!PollingCancellatioinToken.IsCancellationRequested)
             {
                 try
                 {
                     InvalidOrder = false;
                     OrderWithStatus = await HttpClient.GetFromJsonAsync<OrderWithStatus>($"orders/{OrderId}");
-                    if (OrderWithStatus.StatusText == "Entregado")
+                    StateHasChanged();
+                    if (OrderWithStatus.IsDelivered)
                     {
-                        PollingCanlationToken.Cancel();
+                        PollingCancellatioinToken.Cancel();
+                    }
+                    else
+                    {
+                        await Task.Delay(4000);
                     }
                 }
                 catch (Exception ex)
                 {
                     InvalidOrder = true;
-                    PollingCanlationToken.Cancel();
-                    Console.Error.WriteLine(ex);
+                    PollingCancellatioinToken.Cancel();
+                    Console.Error.WriteLine(ex.Message);
+                    StateHasChanged();
                 }
-                StateHasChanged();
-                await Task.Delay(400);
             }
-
         }
-        //component of the parameter life cycle, it is executed each time a parameter changes value.
+
         protected override void OnParametersSet()
         {
-            PollingCanlationToken?.Cancel();
-            PollforUpdate();
+            PollingCancellatioinToken?.Cancel();
+            PoolForUpdates();
         }
 
-        //Used to free up continuous access to the server
-        void IDisposable.Dispose()
+        public void Dispose()
         {
-            PollingCanlationToken?.Cancel();
+            PollingCancellatioinToken?.Cancel();
         }
-
-
     }
 }

@@ -7,11 +7,9 @@ using System.Threading.Tasks;
 
 namespace BlazingPizza.Client.Shared
 {
-    public partial class AddressEditor
+    public partial class OrderReview
     {
         [Parameter]
-        public Address Address { get; set; }
-
-
+        public Order Order { get; set; }
     }
 }

@@ -38,7 +38,7 @@ namespace BlazingPizza.Client.Shared
         }
         #endregion
 
-        #region method
+        #region metodos auxiliares
         void AddTopping(Topping topping)
         {
             if (Pizza.Toppings.Find(pt=>pt.Topping == topping) == null)
@@ -48,7 +48,7 @@ namespace BlazingPizza.Client.Shared
         }
         #endregion
 
-        #region event handler
+        #region manejadores de eventos
         void ToppingSelected(ChangeEventArgs e)
         {
             int index = Convert.ToInt32(e.Value);

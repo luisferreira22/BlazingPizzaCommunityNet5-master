@@ -11,11 +11,11 @@ namespace BlazingPizza.Client.Pages
 {
     public partial class MyOrders
     {
-        #region Servivcios
         [Inject]
-        HttpClient HttpClient { get; set; }
-        #endregion
+        public HttpClient HttpClient { get; set; }
+
         List<OrderWithStatus> OrdersWithStatus;
+
         protected override async Task OnParametersSetAsync()
         {
             OrdersWithStatus = await HttpClient.GetFromJsonAsync<List<OrderWithStatus>>("orders");

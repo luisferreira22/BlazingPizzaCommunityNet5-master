@@ -14,16 +14,17 @@ namespace BlazingPizza.Client.Pages
     {
         #region Servivcios
         [Inject]
-        HttpClient HttpClient { get; set; }
+        public HttpClient HttpClient { get; set; }
+
+        [Inject]
+        public NavigationManager NavigationManager { get; set; }
+
+        [Inject]
+        public OrderState OrderState { get; set; }
         #endregion
-        [Inject]
-        NavigationManager navigationManager { get; set; }
-        [Inject]
-        OrderState OrderState { get; set; }
+
         #region Variables
         List<PizzaSpecial> Specials;
-
-
         #endregion
 
         #region Overrides
@@ -32,8 +33,6 @@ namespace BlazingPizza.Client.Pages
             Specials = await HttpClient.GetFromJsonAsync<List<PizzaSpecial>>("specials");
         }
         #endregion
-
-
 
     }
 }

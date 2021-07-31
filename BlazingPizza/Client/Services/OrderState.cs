@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace BlazingPizza.Client.Services
 {
-    //implementing appstate pattern, this class have the state of the aplication
     public class OrderState
     {
-       public Pizza ConfiguringPizza { get; private set; }
-       public bool ShowingConfigureDialog { get; private set; }
-       public Order Order { get; private set; } = new();
+        public Pizza ConfiguringPizza { get; private set; }
+        public bool ShowingConfigureDialog { get; private set; }
+        public Order Order { get; private set; } = new();
 
-        #region Method
-      public  void ShowConfigurePizzaDialog(PizzaSpecial special)
+
+        #region Metodos
+        public void ShowConfigurePizzaDialog(PizzaSpecial special)
         {
             ConfiguringPizza = new()
             {
@@ -26,7 +26,8 @@ namespace BlazingPizza.Client.Services
             ShowingConfigureDialog = true;
         }
         #endregion
-        #region event handler
+
+        #region manejadores de eventos
         public void CancelConfigurePizzaDialog()
         {
             ConfiguringPizza = null;
@@ -40,17 +41,15 @@ namespace BlazingPizza.Client.Services
             ShowingConfigureDialog = false;
         }
 
-
         public void RemoveConfiguredPizza(Pizza pizza)
         {
             Order.Pizzas.Remove(pizza);
         }
 
-        public void ResetOrder() 
-        { 
-          Order= new() ;
+        public void ResetOrder()
+        {
+            Order = new Order();
         }
-
         #endregion
     }
 }

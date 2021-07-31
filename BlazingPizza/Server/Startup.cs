@@ -1,8 +1,7 @@
 using BlazingPizza.Server.Models;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
@@ -26,27 +25,23 @@ namespace BlazingPizza.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDatabaseDeveloperPageExceptionFilter();
+
             services.AddDbContext<PizzaStoreContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("PizzaStore"))
             );
+
+            //authentication
+            services.AddDefaultIdentity<PizzaStoreUser>(options =>
+            {
+                options.SignIn.RequireConfirmedAccount = true;
+            }).AddEntityFrameworkStores<PizzaStoreContext>();
+            services.AddIdentityServer().AddApiAuthorization<PizzaStoreUser, PizzaStoreContext>();
+            services.AddAuthentication().AddIdentityServerJwt();
+            //end authentication
+
             services.AddControllersWithViews();
             services.AddRazorPages();
-          /*  services.AddAuthentication(options=>
-            {
-                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            })
-                .AddCookie()
-                .AddTwitter(TwitterOptions=>
-                {
-                    TwitterOptions.ConsumerKey = "";
-                    TwitterOptions.ConsumerSecret = "";
-                    TwitterOptions.Events.OnRemoteFailure = (context) =>
-                     {
-                         context.HandleResponse();
-                         return context.Response.WriteAsync("<script>windows.close();</script>");
- 
-                     };
-                });*/
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,8 +64,13 @@ namespace BlazingPizza.Server
             app.UseStaticFiles();
 
             app.UseRouting();
-            //app.UseAuthentication();
-            //app.UseAuthorization();
+
+            //authentication
+            app.UseIdentityServer();
+            app.UseAuthorization();
+            app.UseAuthorization();
+            //end authentication
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();

@@ -36,14 +36,14 @@
     }
     else
     {
-        <div class="empty-cart">Selecciona una pizza<br>para comenzar</div>
+        <div class="empty-cart">Selecciona una pizza<br>para empezar</div>
     }
 
     <div class="order-total @(OrderState.Order.Pizzas.Any() ? "" : "hidden")">
         Total:
         <span class="total-price">@OrderState.Order.GetFormattedTotalPrice()</span>
-        <a href="checkout" class="btn btn-warning" disabled="@(OrderState.Order.Pizzas.Count==0)">
-            Ordenar
+        <a class="btn btn-warning" href="checkout" >
+            Ordenar &gt;
         </a>
     </div>
 </div>

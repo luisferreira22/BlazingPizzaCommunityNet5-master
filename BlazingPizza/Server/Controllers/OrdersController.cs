@@ -13,7 +13,7 @@ namespace BlazingPizza.Server.Controllers
 {
     [Route("orders")]
     [ApiController]
-   // [Authorize]
+    [Authorize]
     public class OrdersController : ControllerBase
     {
         private readonly PizzaStoreContext Context;
@@ -26,7 +26,7 @@ namespace BlazingPizza.Server.Controllers
             order.CreatedTime = DateTime.Now;
             // Establecer una ubicación de envío ficticia
             order.DeliveryLocation =
-                new LatLong(34.9018717, 54.9634342);
+                new LatLong(15.1992362, 120.5854669);
 
             // Establecer el valor de Pizza.SpecialId y Topping.ToppingId
             // para que no se creen nuevos registros Special y Topping.
@@ -47,38 +47,43 @@ namespace BlazingPizza.Server.Controllers
 
             return order.OrderId;
         }
+
         [HttpGet]
-        public async Task<ActionResult<List<OrderWithStatus>>> GetOrders() 
+        public async Task<ActionResult<List<OrderWithStatus>>> GetOrders()
         {
-            var Orders = await Context.Orders.Include(o => o.DeliveryLocation)
-                                             .Include(o => o.Pizzas).ThenInclude(p => p.Special)
-                                             .Include(o => o.Pizzas).ThenInclude(p => p.Toppings)
-                                             .ThenInclude(t => t.Topping)
-                                             .OrderByDescending(o => o.CreatedTime)
-                                             .ToListAsync();
-            return Orders.Select(o => OrderWithStatus.FromOrder(o)).ToList();
+            var Orders = await Context.Orders
+                .Include(o => o.DeliveryLocation)
+                .Include(o => o.Pizzas).ThenInclude(p => p.Special)
+                .Include(o => o.Pizzas).ThenInclude(p => p.Toppings)
+                .ThenInclude(t => t.Topping)
+                .OrderByDescending(o=>o.CreatedTime)
+                .ToListAsync();
+            return Orders.Select(o=> OrderWithStatus.FromOrder(o)).ToList();
         }
 
         [HttpGet("{orderId}")]
-        public async Task<IActionResult> GetOrderWithStatus(int orderId) {
-            IActionResult Result;
-            var order = await Context.Orders.Where(o => o.OrderId == orderId)
-                                           .Include(o => o.DeliveryLocation)
-                                           .Include(o => o.Pizzas).ThenInclude(p => p.Special)
-                                           .Include(o => o.Pizzas).ThenInclude(p => p.Toppings)
-                                           .ThenInclude(t => t.Topping)
-                                            .SingleOrDefaultAsync();
-            if (order == null)
+        public async Task<IActionResult> GetOrder(int orderId)
+        {
+            IActionResult result;
+
+            var Order = await Context.Orders
+                .Where(o => o.OrderId == orderId)
+                .Include(o => o.DeliveryLocation)
+                .Include(o => o.Pizzas).ThenInclude(p => p.Special)
+                .Include(o => o.Pizzas).ThenInclude(p => p.Toppings)
+                .ThenInclude(t => t.Topping)
+                .SingleOrDefaultAsync();
+
+            if (Order == null)
             {
-                Result= NotFound();
+                result = NotFound();
             }
-            else {
-                Result=Ok( OrderWithStatus.FromOrder(order));
+            else
+            {
+                result = Ok(OrderWithStatus.FromOrder(Order));
             }
-            return Result;
 
-
-
+            return result;
         }
     }
 }
